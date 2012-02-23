@@ -1,5 +1,5 @@
 $:.push File.expand_path("../lib", __FILE__)
-require 'lib/jira/version'
+require 'lib/jira5/version'
 
 Gem::Specification.new do |s|
   s.name          = 'ticketmaster-jira5'
