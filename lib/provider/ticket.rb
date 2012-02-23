@@ -1,25 +1,21 @@
 module TicketMaster::Provider
-  module Jira
-    # Ticket class for ticketmaster-jira
-    #
-    
+  module Jira5
     class Ticket < TicketMaster::Provider::Base::Ticket
-      #API = Jira::Ticket # The class to access the api's tickets
-      # declare needed overloaded methods here
       def initialize(*object)
         if object.first
           object = object.first
           @system_data = object.attrs
+          @fields = @system_data["fields"] || @system_data
           hash = {
             :id => @system_data["id"].to_i, 
             :key => @system_data["key"],
-            :title => @system_data["fields"]["summary"],
+            :title => @fields["summary"],
             #:status => @system_data["fields"]["status"]
             #:priority => @system_data["fields"]["priority"],
             #:resolution => @system_data["fields"]["resolution"],
-            :created_at => @system_data["fields"]["created"],
-            :updated_at => @system_data["fields"]["updated"],
-            :description => @system_data["fields"]["description"],
+            :created_at => @fields["created"],
+            :updated_at => @fields["updated"],
+            :description => @fields["description"],
             #:assignee => @system_data["fields"]["assignee"],
             #:requestor => @system_data["fields"]["reporter"]
           }
@@ -70,30 +66,24 @@ module TicketMaster::Provider
       
       def self.create(*options)
         attributes = options.first
+
+        fields = {}
+        fields["summary"] = attributes[:title]
+        fields["description"] = attributes[:description] if attributes[:description].present?
+        fields["project"] = { :id => attributes[:project_id] }
+        fields["priority"] = { :id => attributes[:priority] } if attributes[:priority].present?
+        fields["issuetype"] = { :id => "1" }
+
+        project = $jira.Project.find(attributes[:project_id])
+        issue = $jira.Issue.build
+        result = issue.save({ :fields => fields })
         
-        issue = Jira4R::V2::RemoteIssue.new
-        issue.summary = attributes[:title]
-        issue.description = attributes[:description]
-        issue.project = attributes[:project_key]
-        issue.priority = attributes[:priority] if attributes[:priority].present?
-        
-        if attributes[:components].present?
-          components = Jira4R::V2::ArrayOf_tns1_RemoteComponent.new 
-          attributes[:components].each do |id|
-            component = Jira4R::V2::RemoteComponent.new(id)
-            components.push(component)
-          end
-          issue.components = components
-        end
-        
-        issue.type = "1"
-        result = $jira.createIssue(issue)
-        
-        return nil if result.nil? or result.id.nil?
-        return result
+        return self.new issue if result
+        return nil
       end
       
       private
+
       def normalize_datetime(datetime)
         Time.mktime(datetime.year, datetime.month, datetime.day, datetime.hour, datetime.min, datetime.sec)
       end

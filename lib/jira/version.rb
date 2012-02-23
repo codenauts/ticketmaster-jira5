@@ -1,5 +1,5 @@
 class TicketMaster
-  module Jira
-    VERSION = "0.2"
+  module Jira5
+    VERSION = "0.1"
   end
 end

@@ -1,12 +1,6 @@
 module TicketMaster::Provider
-  module Jira
-    # Project class for ticketmaster-jira
-    #
-    #
+  module Jira5
     class Project < TicketMaster::Provider::Base::Project
-      #API = Jira::Project # The class to access the api's projects
-      # declare needed overloaded methods here
-      # copy from this.copy(that) copies that into this
       def initialize(*object)
         if object.first
           object = object.first
@@ -73,5 +67,3 @@ module TicketMaster::Provider
     end
   end
 end
-
-

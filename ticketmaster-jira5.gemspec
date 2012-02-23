@@ -1,16 +1,14 @@
-# -*- encoding: utf-8 -*-
-
 $:.push File.expand_path("../lib", __FILE__)
 require 'lib/jira/version'
 
 Gem::Specification.new do |s|
-  s.name          = 'ticketmaster-jira'
+  s.name          = 'ticketmaster-jira5'
   s.version       = TicketMaster::Jira::VERSION
   s.platform      = Gem::Platform::RUBY
   s.authors       = ["Charles Lowell", "Rafael George", "Thomas Dohmke"]
   s.email         = ["cowboyd@thefrontside.net", "rafael@hybridgroup.com", "thomas@dohmke.de"]
-  s.homepage      = 'http://github.com/hybridgroup/ticketmaster-jira'
-  s.summary       = %q{TicketMaster binding for JIRA}
+  s.homepage      = 'http://github.com/codenauts/ticketmaster-jira5'
+  s.summary       = %q{TicketMaster binding for JIRA 5 REST API}
   s.description   = %q{Interact with Atlassian JIRA ticketing system from Ruby}
   s.add_dependency  'ticketmaster'
   s.add_dependency  'jira-ruby'

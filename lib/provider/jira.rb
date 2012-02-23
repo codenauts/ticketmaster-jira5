@@ -1,14 +1,10 @@
 module TicketMaster::Provider
-  # This is the Jira Provider for ticketmaster
-  module Jira
+  module Jira5
     include TicketMaster::Provider::Base
-    # This is for cases when you want to instantiate using TicketMaster::Provider::Jira.new(auth)
     def self.new(auth = {})
-      TicketMaster.new(:jira, auth)
+      TicketMaster.new(:jira5, auth)
     end
     
-    # Providers must define an authorize method. This is used to initialize and set authentication
-    # parameters to access the API
     def authorize(auth = {})
       @authentication ||= TicketMaster::Authenticator.new(auth)
       $jira = JIRA::Client.new({ :site => @authentication.url, :username => @authentication.username, :password => @authentication.password })
