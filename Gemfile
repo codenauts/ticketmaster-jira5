@@ -1,7 +1,7 @@
 source :rubygems
 
 gem 'ticketmaster'
-gem 'jira-ruby', :git => "git://github.com/codenauts/jira-ruby.git", :require => 'jira'
+gem 'jira-ruby', :git => "git://github.com/codenauts/jira-ruby.git"
 
 group :development do
   gem "rspec"
