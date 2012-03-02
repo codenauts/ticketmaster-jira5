@@ -2,7 +2,7 @@ module TicketMaster::Provider
   module Jira5
     class Project < TicketMaster::Provider::Base::Project
       def initialize(*object)
-        if object.first
+        if object.first and object.first.attrs.present?
           object = object.first
           @system_data = object.attrs
           hash = {
