@@ -81,6 +81,20 @@ module TicketMaster::Provider
         return self.new issue if result
         return nil
       end
+
+      def add_remote_link(url, title, icon_url, icon_title)
+        link = JIRA::Resource::Remotelink.new($jira, :issue => self)
+        link.save({ 
+          :object => {
+            :url => url, 
+            :title => title, 
+            :icon => {
+              "url16x16" => icon_url, 
+              "title" => icon_title
+            }
+          }
+        })
+      end
       
       private
 
