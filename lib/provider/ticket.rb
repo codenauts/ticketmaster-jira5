@@ -83,7 +83,7 @@ module TicketMaster::Provider
       end
 
       def add_remote_link(url, title, icon_url, icon_title)
-        link = JIRA::Resource::Remotelink.new($jira, :issue_id => self.id)
+        link = JIRA::Resource::Remotelink.new($jira, :issue_id => self.id.to_s)
         link.save({ 
           :object => {
             :url => url, 
