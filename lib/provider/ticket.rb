@@ -86,7 +86,6 @@ module TicketMaster::Provider
         link = JIRA::Resource::Remotelink.new($jira, :issue_id => self.id.to_s)
         link.save({ 
           :object => {
-            :relationship => 
             :url => url, 
             :title => title, 
             :icon => {
