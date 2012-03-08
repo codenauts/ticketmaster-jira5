@@ -92,8 +92,8 @@ module TicketMaster::Provider
               "url16x16" => icon_url, 
               "title" => icon_title
             }
-          }.merge(attrs)
-        })
+          }
+        }.merge(attrs))
       end
       
       private
