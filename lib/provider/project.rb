@@ -15,6 +15,10 @@ module TicketMaster::Provider
         end
       end
 
+      def key
+        self[:key].to_s
+      end
+
       def id
         self[:id].to_i
       end
