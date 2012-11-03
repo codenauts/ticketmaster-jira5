@@ -7,7 +7,14 @@ module TicketMaster::Provider
     
     def authorize(auth = {})
       @authentication ||= TicketMaster::Authenticator.new(auth)
-      $jira = JIRA::Client.new({ :site => @authentication.url, :username => @authentication.username, :password => @authentication.password })
+      uri = URI.parse(@authentication.url)
+      path = uri.path
+      $jira = JIRA::Client.new({ 
+        :site => uri.scheme + "://" + uri.host, 
+        :rest_base_path => uri.path + (uri.path.end_with?("/") ? "" : "/") + "rest/api/2",
+        :username => @authentication.username, 
+        :password => @authentication.password 
+      })
     end
 
     def project(*options)
