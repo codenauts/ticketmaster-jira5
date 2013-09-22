@@ -84,13 +84,15 @@ module TicketMaster::Provider
         fields["description"] = attributes[:description] if attributes[:description].present?
         fields["project"] = { :id => attributes[:project_id] }
         fields["priority"] = { :id => attributes[:priority] } if attributes[:priority].present?
+        fields["components"] = [ { :name => attributes[:component] } ] if attributes[:component].present?
+        fields["versions"] = [ { :name => attributes[:version] } ] if attributes[:version].present?
         fields["issuetype"] = { :id => "1" }
 
         project = $jira.Project.find(attributes[:project_id])
         issue = $jira.Issue.build
         result = issue.save({ :fields => fields })
         
-        return self.new issue if result
+        return self.new issue if (result and issue.attrs["errors"].blank?)
         return nil
       end
 
