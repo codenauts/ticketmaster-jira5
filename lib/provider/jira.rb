@@ -10,7 +10,7 @@ module TicketMaster::Provider
       uri = URI.parse(@authentication.url)
       path = uri.path
       $jira = JIRA::Client.new({ 
-        :site => uri.scheme + "://" + uri.host, 
+        :site => uri.scheme + "://" + uri.host + ":" + uri.port,
         :rest_base_path => uri.path + (uri.path.end_with?("/") ? "" : "/") + "rest/api/2",
         :username => @authentication.username, 
         :password => @authentication.password 
