@@ -13,7 +13,8 @@ module TicketMaster::Provider
         :site => uri.scheme + "://" + uri.host + ":" + uri.port.to_s,
         :rest_base_path => uri.path + (uri.path.end_with?("/") ? "" : "/") + "rest/api/2",
         :username => @authentication.username, 
-        :password => @authentication.password 
+        :password => @authentication.password,
+        :use_ssl => (uri.scheme =~ /s$/)
       })
     end
 
