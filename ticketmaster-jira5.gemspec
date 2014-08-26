@@ -3,7 +3,7 @@ require 'jira5/version'
 
 Gem::Specification.new do |s|
   s.name          = 'ticketmaster-jira5'
-  s.version       = "0.1.1"
+  s.version       = "0.1.2"
   s.platform      = Gem::Platform::RUBY
   s.authors       = ["Charles Lowell", "Rafael George", "Thomas Dohmke"]
   s.email         = ["cowboyd@thefrontside.net", "rafael@hybridgroup.com", "thomas@dohmke.de"]

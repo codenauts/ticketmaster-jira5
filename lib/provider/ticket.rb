@@ -92,8 +92,18 @@ module TicketMaster::Provider
         issue = $jira.Issue.build
         result = issue.save({ :fields => fields })
         
-        return self.new issue if (result and issue.attrs["errors"].blank?)
-        return nil
+        if result && issue.attrs["errors"].blank?
+          return self.new issue 
+        elsif issue.attrs["errors"].present?
+          message = ""
+          issue.attrs["errors"].each do |k, v|
+            message << "Field: #{k.to_s}\n"
+            message << "Message: #{v.to_s}\n\n"
+          end
+          raise Exception.new(message)
+        else
+          return nil
+        end
       end
 
       def add_remote_link(url, title, icon_url, icon_title, attrs = {})
