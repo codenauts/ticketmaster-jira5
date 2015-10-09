@@ -86,7 +86,7 @@ module TicketMaster::Provider
         fields["priority"] = { :id => attributes[:priority] } if attributes[:priority].present?
         fields["components"] = [ { :name => attributes[:component] } ] if attributes[:component].present?
         fields["versions"] = [ { :name => attributes[:version] } ] if attributes[:version].present?
-        fields["issuetype"] = { :id => "1" }
+        fields["issuetype"] = { :id => attributes[:issue_type_id].presence || "1" }
 
         project = $jira.Project.find(attributes[:project_id])
         issue = $jira.Issue.build
